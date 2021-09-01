@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>File Records</h1>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>File</th>
+      <th>options</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @file_records.each do |file_record| %>
+      <tr>
+        <td><%= file_record.name %></td>
+        <td><%= link_to 'Download origional File',file_record.file.url,class:'btn btn-default btn-xs' %></td>
+        <td>
+          <%= link_to 'Edit', edit_file_record_path(file_record),class:'btn btn-default btn-xs' %>|
+          <%= link_to 'Generate Inci Score', inci_score_file_record_path(file_record),class:'btn btn-default btn-xs' %>
+        
+          <a href="<%=inci_score_file_record_path(file_record,format: :pdf)%>" target='_blank' class='btn btn-default btn-xs'>Generate PDF</a>
+        
+          <%= link_to 'Destroy', file_record, method: :delete, data: { confirm: 'Are you sure?' },class:'btn btn-danger btn-xs' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New File Record', new_file_record_path,class:'btn btn-default' %>

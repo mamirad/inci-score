@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  composition: MyText
+  score: MyString
+  reference: MyString
+  unrecognized_inci: MyText
+
+two:
+  composition: MyText
+  score: MyString
+  reference: MyString
+  unrecognized_inci: MyText

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Costajob</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Inci Catalogs Score </a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Home</a></li>
+          <li><a href="<%=new_file_record_path%>">New Sheet</a></li>
+          <li><a href="<%=file_records_path%>">View Record</a></li>
+        </ul>
+      </div>
+    </nav>
+  
+    <div class="container">
+      <%= yield %>
+    </div>
+    <footer class="bg-default text-center">
+      &copy; 2020 Some copyright message.
+    </footer>
+  </body>
+</html>

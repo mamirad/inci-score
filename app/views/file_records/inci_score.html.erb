@@ -1,0 +1,26 @@
+<%if @inci_records.present?%>
+<a href="<%=inci_score_file_record_path(@file_record,format: :pdf)%>" target='_blank' class='btn btn-default'>Generate PDF</a>
+<hr>
+<%end%>
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Product(s)</th>
+			<th>Score</th>
+			<th>UnRecognized Inci</th>
+			<th>Composition</th>
+			<th>Reference</th>
+		</tr>
+	</thead>
+	<tbody>
+		<%@inci_records.each do |inci_record|%>
+			<tr>
+				<td><%=inci_record.product%></td>
+				<td><%=inci_record.score%></td>
+				<td><%=inci_record.unrecognized_inci.join(",")%></td>
+				<td><%=inci_record.composition%></td>
+				<td><%=inci_record.reference%></td>
+			</tr>
+		<%end%>
+	</tbody>
+</table>
