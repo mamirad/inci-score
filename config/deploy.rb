@@ -1,8 +1,8 @@
 # config valid for current version and patch releases of Capistrano
 # lock "~> 3.14.0"
 
-set :application, "pos"
-set :repo_url,  'https://mamirad:GitHub786@github.com/mamirad/pos.git'
+set :application, "inci"
+set :repo_url,  'https://mamirad:GitHub786@github.com/mamirad/inci-score.git'
 
 set :deploy_to, "/home/deploy/#{fetch :application}"
 
