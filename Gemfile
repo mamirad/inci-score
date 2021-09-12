@@ -15,6 +15,8 @@ gem 'jquery-rails'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+gem 'devise'
+gem 'acts_as_tenant'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets

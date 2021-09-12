@@ -22,6 +22,7 @@ class FileRecordsController < ApplicationController
   # POST /file_records or /file_records.json
   def create
     @file_record = FileRecord.new(file_record_params)
+    @file_record.user_id = current_user.id
 
     respond_to do |format|
       if @file_record.save
@@ -56,7 +57,7 @@ class FileRecordsController < ApplicationController
   end
 
   def inci_score
-   unless @file_record.inci_records.present?
+    unless @file_record.inci_records.present?
       require 'roo'
       require "inci_score"
       index=0
@@ -66,19 +67,19 @@ class FileRecordsController < ApplicationController
       sheets.each do |sheet|
         while $i < excel.sheet(sheet).last_row  do
           composition = excel.sheet(sheet).row($i)
-          inci = InciScore::Computer.new(src: composition[1]).call
+          inci = InciScore::Computer.new(src: composition[2]).call
           score = inci.score
           unrecognized = inci.unrecognized
 
-          InciRecord.create(product:composition[0],score:score,composition:composition[1],unrecognized_inci:unrecognized,reference:$i,file_record_id:@file_record.id)
+          InciRecord.create(product:composition[0],score:score,composition:composition[2],unrecognized_inci:unrecognized,reference:composition[1],file_record_id:@file_record.id)
 
           puts("Inside the loop i = #$i" )
           $i +=1
         end
       end
-   end
-   @inci_records = @file_record.inci_records
-   respond_to do |format|
+    end
+    @inci_records = @file_record.inci_records
+    respond_to do |format|
       format.html
       format.pdf do
         render pdf: "file_name"   # Excluding ".pdf" extension.

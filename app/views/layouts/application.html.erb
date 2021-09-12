@@ -19,6 +19,7 @@
           <li class="active"><a href="/">Home</a></li>
           <li><a href="<%=new_file_record_path%>">New Sheet</a></li>
           <li><a href="<%=file_records_path%>">View Record</a></li>
+          <li><%= link_to "log out", destroy_user_session_path, method: :delete,class:'btn btn-xs btn-default' %></li>
         </ul>
       </div>
     </nav>
