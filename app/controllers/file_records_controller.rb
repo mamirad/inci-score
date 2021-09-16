@@ -57,30 +57,30 @@ class FileRecordsController < ApplicationController
   end
 
   def inci_score
-    unless @file_record.inci_records.present?
-      require 'roo'
-      require "inci_score"
-      index=0
-      $i=2
-      excel = Roo::Spreadsheet.open(@file_record.file.path)
-      sheets = excel.sheets
-      sheets.each do |sheet|
-        while $i < excel.sheet(sheet).last_row  do
-          composition = excel.sheet(sheet).row($i)
-          inci = InciScore::Computer.new(src: composition[2]).call
-          score = inci.score
-          unrecognized = inci.unrecognized
-
-          InciRecord.create(product:composition[0],score:score,composition:composition[2],unrecognized_inci:unrecognized,reference:composition[1],file_record_id:@file_record.id)
-
-          puts("Inside the loop i = #$i" )
-          $i +=1
-        end
+    require 'roo'
+    require "inci_score"
+    @file_record.inci_records.destroy_all
+    @inci_records=[]
+    index=0
+    $i=2
+    excel = Roo::Spreadsheet.open(@file_record.file.path)
+    sheets = excel.sheets
+    sheets.each do |sheet|
+      while $i <= excel.sheet(sheet).last_row  do
+        composition = excel.sheet(sheet).row($i)
+        inci = InciScore::Computer.new(src: composition[2]).call
+        score = inci.score
+        unrecognized = inci.unrecognized
+        @obj = InciRecord.create(product:composition[0],score:score,composition:composition[2],unrecognized_inci:unrecognized,reference:composition[1],file_record_id:@file_record.id)
+        puts("Inside the loop i = #$i" )
+        $i +=1
+        @inci_records.push(@obj)
       end
     end
-    @inci_records = @file_record.inci_records
+    # @inci_records = @file_record.inci_records
     respond_to do |format|
-      format.html
+      format.html{
+      }
       format.pdf do
         render pdf: "file_name"   # Excluding ".pdf" extension.
       end
